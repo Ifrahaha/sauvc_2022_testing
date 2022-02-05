@@ -32,56 +32,56 @@ class Movement:
 
         self.THRUSTER_PINS = [self.pin_f, self.pin_b, self.pin_r, self.pin_l]
 
-        print("Initialisation. Setting pulse width to 1500")
+        print("Initialisation. Setting pulse width to 1000")
         for pin in self.THRUSTER_PINS:
-            self.pi.set_servo_pulsewidth(pin, 1500)
+            self.pi.set_servo_pulsewidth(pin, 1000)
 
         time.sleep(1)
 
     def forward(self, thrust):
         print('Forward')
-        self.pi.set_servo_pulsewidth(self.pin_l, 1500 + thrust)
-        self.pi.set_servo_pulsewidth(self.pin_r, 1500 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1000 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1000 + thrust)
 
     def backward(self, thrust):
         print('Backward')
-        self.pi.set_servo_pulsewidth(self.pin_l, 1500 - thrust)
-        self.pi.set_servo_pulsewidth(self.pin_r, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1000 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1000 - thrust)
 
     def left(self, thrust):
         print('Left')
-        self.pi.set_servo_pulsewidth(self.pin_l, 1500 - thrust)
-        self.pi.set_servo_pulsewidth(self.pin_r, 1500 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1000 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1000 + thrust)
 
     def right(self, thrust):
         print('Right')
-        self.pi.set_servo_pulsewidth(self.pin_l, 1500 + thrust)
-        self.pi.set_servo_pulsewidth(self.pin_r, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1000 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1000 - thrust)
 
     def up(self, thrust):
         print('Up')
-        self.pi.set_servo_pulsewidth(self.pin_f, 1500 + thrust)
-        self.pi.set_servo_pulsewidth(self.pin_b, 1500 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_f, 1000 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1000 + thrust)
 
     def down(self, thrust):
         print('Down')
-        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
-        self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_f, 1000 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1000 - thrust)
 
     def tilt_forward(self, thrust):
         print('Tilt_Forward')
-        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
-        self.pi.set_servo_pulsewidth(self.pin_b, 1500 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_f, 1000 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1000 + thrust)
 
     def tilt_backward(self, thrust):
         print('Tilt_Backward')
-        self.pi.set_servo_pulsewidth(self.pin_f, 1500 + thrust)
-        self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_f, 1000 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1000 - thrust)
 
     def hold(self):
         print('Hold')
         for pin in self.THRUSTER_PINS:
-            self.pi.set_servo_pulsewidth(pin, 1500)
+            self.pi.set_servo_pulsewidth(pin, 1000)
 
     def custom_thrusts(self, thrusts):
         '''
@@ -119,8 +119,8 @@ class Movement:
             rot_thrust = -200
         print('rot_thrust = ', rot_thrust)
 
-        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - rot_thrust)
-        self.pi.set_servo_pulsewidth(self.pin_b, 1500 + rot_thrust)
+        self.pi.set_servo_pulsewidth(self.pin_f, 1000 - rot_thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1000 + rot_thrust)
 
     def _get_under_thrust(self, desired_depth):
         try:
@@ -158,8 +158,8 @@ class Movement:
             rot_thrust = -100
         print('rot_thrust  = ', rot_thrust)
 
-        forward_thrust = int(1500 - under_thrust - rot_thrust)
-        backward_thrust = int(1500 - under_thrust + rot_thrust)
+        forward_thrust = int(1000 - under_thrust - rot_thrust)
+        backward_thrust = int(1000 - under_thrust + rot_thrust)
 
         print(forward_thrust, backward_thrust)
 
