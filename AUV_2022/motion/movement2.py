@@ -26,9 +26,9 @@ class Movement:
             print('Undable to initialise Node MCU read script')
 
         self.pin_f = 3
-        self.pin_b = 26
+        self.pin_b = 23
         self.pin_r = 19
-        self.pin_l = 23
+        self.pin_l = 26
 
         self.THRUSTER_PINS = [self.pin_f, self.pin_b, self.pin_r, self.pin_l]
 
