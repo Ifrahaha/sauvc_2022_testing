@@ -167,11 +167,11 @@ class Movement:
         self.pi.set_servo_pulsewidth(self.pin_b, backward_thrust)
 
 if __name__ == __main__ :
-    forward()
+    forward(400)
     time.sleep(10)
-    backward()
+    backward(400)
     time.sleep(10)
-    left()
+    left(400)
     time.sleep(10)
-    right()
+    right(400)
     time.sleep(10)
