@@ -15,6 +15,7 @@ def biggestContourI(contours):
 
 def checkContour(bc):
     cont=[]
+    bc = biggestContourI(contours0)
     cont.append(bc)
     try:
         for i in range(len(bc)):
@@ -37,18 +38,18 @@ def checkContour(bc):
     except TypeError as e:
         print("No object in field of view")
         print(cont)
-    try:
-        if bc > 0:
-            print("bc forward")
-            #m.forward(100)
-            pass
-        if bc < 0:
-            print("bc hold")
-            #m.hold()
-            pass
-    except TypeError as e:
-        print("Area 0")
-        print(cont)
+        try:
+            if bc > 0:
+                print("bc forward")
+                #m.forward(100)
+                pass
+            if bc < 0:
+                print("bc hold")
+                #m.hold()
+                pass
+        except TypeError as e:
+            print("Area 0")
+            print(cont)
 
 
 cam = cv2.VideoCapture(0)
@@ -67,7 +68,7 @@ while True:
     
     # Only draw the biggest one
     #m.right(100)
-    bc = biggestContourI(contours0)
+    
     checkContour(bc)
 
     cv2.drawContours(img,contours0, bc, (0,255,0), 3)
