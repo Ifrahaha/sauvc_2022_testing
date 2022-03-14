@@ -29,38 +29,30 @@ def checkContour(contours):
             
             if cont[i-1]>cont[i]:
                 print("hold")
-                if bc > 0:
+                if max(cont)>bc:
                     print("bc forward")
                 #m.forward(100)
                     pass
-                if bc < 0:
-                    print("bc hold")
-                #m.hold()
-                    pass
+                else:
+                    break
+                pass
                 
                 #m.hold()
             elif cont[i-1]<cont[i]:
                 print("right")
-                if bc > 0:
-                    print("bc forward")
-            #m.forward(100)
-                    pass
-                if bc < 0:
-                    print("bc hold")
-            #m.hold()
-                    pass
+                pass
                 
                 #m.right(100)
             elif cont[i-1]==cont[i]:
                 print("right")
-                if bc > 0:
+                if max(cont)>bc:
                     print("bc forward")
-        #m.forward(100)
+                #m.forward(100)
                     pass
-                if bc < 0:
-                    print("bc hold")
+                else:
+                    break
         #m.hold()
-                    pass
+                pass
                 
                 #m.right(100)
     except TypeError as e:
