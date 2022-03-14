@@ -29,35 +29,45 @@ def checkContour(contours):
             
             if cont[i-1]>cont[i]:
                 print("hold")
-                break
+                if bc > 0:
+                    print("bc forward")
+                #m.forward(100)
+                    pass
+                if bc < 0:
+                    print("bc hold")
+                #m.hold()
+                    pass
                 
                 #m.hold()
             elif cont[i-1]<cont[i]:
                 print("right")
-                continue
+                if bc > 0:
+                    print("bc forward")
+            #m.forward(100)
+                    pass
+                if bc < 0:
+                    print("bc hold")
+            #m.hold()
+                    pass
                 
                 #m.right(100)
             elif cont[i-1]==cont[i]:
                 print("right")
-                continue
+                if bc > 0:
+                    print("bc forward")
+        #m.forward(100)
+                    pass
+                if bc < 0:
+                    print("bc hold")
+        #m.hold()
+                    pass
                 
                 #m.right(100)
     except TypeError as e:
         print("No object in field of view")
         print(cont)
-        try:
-            if bc > 0:
-                print("bc forward")
-                #m.forward(100)
-                pass
-            if bc < 0:
-                print("bc hold")
-                #m.hold()
-                pass
-        except TypeError as e:
-            print("Area 0")
-            print(cont)
-    return maxI
+        
+            
 
 
 cam = cv2.VideoCapture(0)
