@@ -16,8 +16,8 @@ cam = cv2.VideoCapture(0)
 while True:
     ret_val, img = cam.read()
 
-    lower = np.array([112, 188, 46], dtype = "uint8")
-    higher = np.array([188, 255, 89], dtype = "uint8")
+    lower = np.array([154, 112, 47], dtype = "uint8")
+    higher = np.array([212, 223, 146], dtype = "uint8")
     
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     h, w = img.shape[:2]

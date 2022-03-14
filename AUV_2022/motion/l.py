@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 import cv2
 import numpy
-import movement
+#import movement
 import time
 
 cap = cv2.VideoCapture(0)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 out_image = cv2.VideoWriter('recording-%s.avi' % time.time(), fourcc, 20.0, (640, 480))
 
-m = movement.Movement()
+#m = movement.Movement()
 
 # RED: 115-135
 # Yellow: 90-109
@@ -29,7 +29,7 @@ def mask_image(image, color_no):
 
 
 def centroid_if_object_present(image, mask):
-    im2, contours, hierarchy = cv2.findContours(
+    contours, hierarchy = cv2.findContours(
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     try:
@@ -81,13 +81,13 @@ def correct_error(cx, cy, image):
     err_y = cy - h/2
     constant = 90
     y_slope = 1/30.
-    m.hp_control(err_y*y_slope + constant)
+    # m.hp_control(err_y*y_slope + constant)
 
-    thrusts = {
-        m.pin_l: linear_thrust + rot_thrust,
-        m.pin_r: linear_thrust - rot_thrust,
-    }
-    m.custom_thrusts(thrusts)
+    # thrusts = {
+    #     m.pin_l: linear_thrust + rot_thrust,
+    #     m.pin_r: linear_thrust - rot_thrust,
+    # }
+    # m.custom_thrusts(thrusts)
 
 
 def tearDown():
@@ -116,57 +116,62 @@ def run():
             if contour_area > 90000:
                 touch = True
                 s_time = time.time()
-                if color_no<3:
-                    color_no = color_no + 1
-                else: 
-                    color_no=0
+                color_no = color_no + 1
             else:
                 (cx, cy) = centroid
                 correct_error(cx, cy, image)
         else:
             if color_no > 1:
                 print("Go Left!")
-                m.left(100)
+                #m.left(100)
             else:
                 print("Go Right!")
-                m.right(100)
+                #m.right(100)
 
     else:
         print('!!!!!! touch  !!!!!!!!!!!!')
         if (time.time() - s_time <= 1):
-            m.forward(100)
+            #m.forward(100)
+            pass
         elif (1 < time.time() - s_time <= 2):
-            m.hold()
+            #m.hold()
+            pass
         elif (2 < time.time() - s_time <= 6):
-            m.backward(150)
+            #m.backward(150)
+            pass
         else:
-            m.hold()
+            #m.hold()
+            pass
             touch = False
 
 
 def main():
     while True:
-        rec, image = cap.read()
+        try:
+            rec, image = cap.read()
 
-        # See on Yellow
-        mask = mask_image(image, 1)
-        centroid = centroid_if_object_present(image, mask)
-        out_image.write(image)
+            # See on Yellow
+            mask = mask_image(image, 1)
+            centroid = centroid_if_object_present(image, mask)
+            out_image.write(image)
 
-        if centroid:
-            (cx, cy) = centroid
-            # correct_error(cx, cy, image)
-        else:
-            print("Searching! Go Right!")
-            # m.right(100)
-            # m.pitch_control()
+            if centroid:
+                (cx, cy) = centroid
+                # correct_error(cx, cy, image)
+            else:
+                print("Searching! Go Right!")
+                # m.right(100)
+                # m.pitch_control()
 
-        cv2.imshow("Image", cv2.resize(image, (640, 480)))
-        cv2.imshow("Mask", cv2.resize(mask, (640, 480)))
-        key = cv2.waitKey(20)
-        if key & 0xFF == ord('q'):
-            tearDown()
-            break
+            cv2.imshow("Image", cv2.resize(image, (640, 480)))
+            cv2.imshow("Mask", cv2.resize(mask, (640, 480)))
+
+            key = cv2.waitKey(20)
+            if key & 0xFF == ord('q'):
+                tearDown()
+                break
+        except Exception as e:
+            main()
 
 
 if __name__ == '__main__':

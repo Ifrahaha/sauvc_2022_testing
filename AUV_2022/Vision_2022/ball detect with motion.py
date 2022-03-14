@@ -99,12 +99,11 @@ while True:
 	# show the frame to our screen
 	cv2.imshow("Frame", frame)
 	key = cv2.waitKey(1) & 0xFF
-	#if pts[i] 
+	print(pts)
 	# if the 'q' key is pressed, stop the loop
 	if key == ord("q"):
 		break
-	
-	if pts[i]>
+
 # if we are not using a video file, stop the camera video stream
 if not args.get("video", False):
 	vs.stop()
@@ -114,5 +113,4 @@ else:
 	vs.release()
 
 # close all windows
-
 cv2.destroyAllWindows()
