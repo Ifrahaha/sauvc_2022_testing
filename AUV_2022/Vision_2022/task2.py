@@ -25,7 +25,7 @@ def checkContour(contours):
             bc = maxI
             cont.append(maxI)
     try:
-        for i in range(len(bc)):
+        for i in range(len(cont)):
             
             if cont[i-1]>cont[i]:
                 print("hold")

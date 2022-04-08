@@ -1,12 +1,7 @@
 import cv2
 import numpy as np
 
-def show_image(image):
-    small = cv2.resize(image, (0,0), fx=0.6, fy=0.6) 
-    cv2.imshow('image',small)
-    c = cv2.waitKey()
-    if c >= 0 : return -1
-    return 0
+
 
 
 image = cv2.imread('/home/crossfire/Programming projects/auv_testing/blue.jpg')
