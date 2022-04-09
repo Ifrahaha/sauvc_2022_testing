@@ -57,7 +57,7 @@ while True:
 	thickness = 2
 
 
-
+	
 	start_point =(0,0)
 	end_point =(150,225)
 	cv2.rectangle(frame, start_point, end_point, color, thickness)
@@ -134,9 +134,14 @@ while True:
 		(h, w) = frame.shape[:2]
 		cx=w/2
 		cy=h/2
+
+
+		
 		if (pts[i][0]<150 and pts[i][1]<225):
+			counter1=counter1+1
 			print("up left")
 		if (pts[i][0]<300 and pts[i][1]<113):
+			counter1=counter1+1
 			print("up left")
 
 		if (pts[i][0]>450 and pts[i][1]<225):
@@ -155,7 +160,7 @@ while True:
 		if (pts[i][0]>300 and pts[i][1]>338):
 			print("down right")		
 
-		if (pts[i][0]>150 or pts[i][0]<450 or pts[i][1]==113 or pts[i][1]==338):
+		if (pts[i][0]>150 and pts[i][1]>113 and pts[i][0]<450 and pts[i][1]<338):
 			print("center")
 
 
