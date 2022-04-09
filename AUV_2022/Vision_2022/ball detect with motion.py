@@ -122,39 +122,36 @@ while True:
 		(h, w) = frame.shape[:2] #h=y-axis, w=x-axis
 		cx=w/2
 		cy=h/2
-		ax=pts[i][0]
-		ay=pts[i][1]
 
 
-		if (ax<(w/3) and ay<(h/3)):
+		if (pts[i][0]<(w/3) and pts[i][1]<(h/3)):
 			print("up left")
 
-		if (ax>(w/3) and ax<(2*w/3) and ay<(h/3)):
+		if (pts[i][0]>(w/3) and pts[i][0]<(2*w/3) and pts[i][1]<(h/3)):
 			print("up")
 
-		if (ax>(2*w/3) and ay<(h/3)):
+		if (pts[i][0]>(2*w/3) and pts[i][1]<(h/3)):
 			print("up right")
 
-		if (ax<(w/3) and ay>(h/3) and ay<(2*h/3)):
+		if (pts[i][0]<(w/3) and pts[i][1]>(h/3) and pts[i][1]<(2*h/3)):
 			print("left")
 
-		if (ax>(w/3) and ax<(2*w/3) and ay>(h/3) and ay<(2*h/3)):
+		if (pts[i][0]>(w/3) and pts[i][0]<(2*w/3) and pts[i][1]>(h/3) and pts[i][1]<(2*h/3)):
 			print("center")
 
-		if (ax>(2*w/3) and ay>(h/3) and ay<(2*h/3)):
+		if (pts[i][0]>(2*w/3) and pts[i][1]>(h/3) and pts[i][1]<(2*h/3)):
 			print("right")
 
-		if (ax<(w/3) and ay>(2*h/3)):
+		if (pts[i][0]<(w/3) and pts[i][1]>(2*h/3)):
 			print("down left")
 
-		if (ax>(w/3) and ax<(2*w/3) and ay>(2*h/3)):
+		if (pts[i][0]>(w/3) and pts[i][0]<(2*w/3) and pts[i][1]>(2*h/3)):
 			print("down")
 
-		if (ax>(2*w/3) and ay>(2*h/3)):
+		if (pts[i][0]>(2*w/3) and pts[i][1]>(2*h/3)):
 			print("down right")
 
 		
-
 
 	# show the frame to our screen
 	cv2.imshow("Frame", frame)
