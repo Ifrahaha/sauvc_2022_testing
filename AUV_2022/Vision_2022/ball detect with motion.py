@@ -49,6 +49,9 @@ while True:
 	blurred = cv2.GaussianBlur(frame, (11, 11), 0)
 	hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
 
+
+	(h, w) = frame.shape[:2] #w:image-width and h:image-height
+	cv2.circle(frame, (w//2, h//2), 1, (255, 255, 255), -1) 
 	# construct a mask for the color "green", then perform
 	# a series of dilations and erosions to remove any small
 	# blobs left in the mask
@@ -77,9 +80,11 @@ while True:
 		if radius > 10:
 			# draw the circle and centroid on the frame,
 			# then update the list of tracked points
-			cv2.circle(frame, (int(x), int(y)), int(radius),
-				(0, 255, 255), 2)
+			cv2.circle(frame, (int(x), int(y)), int(radius),(0, 255, 255), 2)
 			cv2.circle(frame, center, 5, (0, 0, 255), -1)
+
+
+
 
 	# update the points queue
 	pts.appendleft(center)
