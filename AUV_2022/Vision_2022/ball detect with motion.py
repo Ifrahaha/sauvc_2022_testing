@@ -51,7 +51,7 @@ while True:
 
 
 	(h, w) = frame.shape[:2] #w:image-width and h:image-height
-	cv2.circle(frame, (w//2, h//2), 1, (255, 255, 255), -1) 
+	cv2.circle(frame, (w//2, h//2), 3, (255, 255, 255), -1) 
 	# construct a mask for the color "green", then perform
 	# a series of dilations and erosions to remove any small
 	# blobs left in the mask
@@ -85,7 +85,6 @@ while True:
 
 
 
-
 	# update the points queue
 	pts.appendleft(center)
 
@@ -100,11 +99,34 @@ while True:
 		# draw the connecting lines
 		thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
 		cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
+		
+		(h, w) = frame.shape[:2]
+		cx=w/2
+		cy=h/2
+		if (pts[i][0]<cx and pts[i][1]<cy):
+			print("up left")
+
+
+		if (pts[i][0]>cx and pts[i][1]<cy):
+			print("up right")
+
+
+		if (pts[i][0]<cx and pts[i][1]>cy):
+			print("down left")
+
+
+		if (pts[i][0]>cx and pts[i][1]>cy):
+			print("down right")
+		
+
+		if (pts[i][0]==cx and pts[i][1]==cy):
+			print("center")
+
 
 	# show the frame to our screen
 	cv2.imshow("Frame", frame)
 	key = cv2.waitKey(1) & 0xFF
-	print(pts)
+	#print(pts)
 	# if the 'q' key is pressed, stop the loop
 	if key == ord("q"):
 		break
