@@ -14,8 +14,8 @@ ap.add_argument("-b", "--buffer", type=int, default=64,help="max buffer size")
 args = vars(ap.parse_args())
 
 
-greenLower = (154, 112, 47)
-greenUpper = (212, 223, 146)
+greenLower = (38, 102, 84)
+greenUpper = (74, 244, 147)
 pts = deque(maxlen=args["buffer"])
 
 # if a video path was not supplied, grab the reference
@@ -54,33 +54,21 @@ while True:
 	cv2.circle(frame, (w//2, h//2), 3, (255, 255, 255), -1) 
 	#cv2.circle(frame, (w//2, h//2), 113, (255, 255, 255), -1) 
 	color = (255, 0, 0)
-	thickness = 2
+	thickness = 1
+	(h, w) = frame.shape[:2] #h=y-axis, w=x-axis
+	
+	# start_point =(0,0)
+	# end_point =((w/3),(h/3))
+	# cv2.rectangle(frame, start_point, end_point, color, thickness)
 
 
+	# start_point =((w/3),0)
+	# end_point =((2*w/3),(h/3))
+	# cv2.rectangle(frame, start_point, end_point, color, thickness)
 
-	start_point =(0,0)
-	end_point =(150,225)
-	cv2.rectangle(frame, start_point, end_point, color, thickness)
-
-
-	start_point =(150,0)
-	end_point =(300,113)
-	cv2.rectangle(frame, start_point, end_point, color, thickness)
-
-	start_point =(150,113)
-	end_point =(450,338)
-	cv2.rectangle(frame, start_point, end_point, color, thickness)
-
-	start_point =(0,0)
-	end_point =(150,225)
-	cv2.rectangle(frame, start_point, end_point, color, thickness)
-
-	start_point =(0,0)
-	end_point =(150,225)
-	cv2.rectangle(frame, start_point, end_point, color, thickness)
-
-
-
+	# start_point =((2*w/3),0)
+	# end_point =((2*w/3),(h/3))
+	# cv2.rectangle(frame, start_point, end_point, color, thickness)
 
 
 	# construct a mask for the color "green", then perform
@@ -131,38 +119,48 @@ while True:
 		thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
 		cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
 		
-		(h, w) = frame.shape[:2]
+		(h, w) = frame.shape[:2] #h=y-axis, w=x-axis
 		cx=w/2
 		cy=h/2
-		if (pts[i][0]<150 and pts[i][1]<225):
+		ax=pts[i][0]
+		ay=pts[i][1]
+
+
+		if (ax<(w/3) and ay<(h/3)):
 			print("up left")
-		if (pts[i][0]<300 and pts[i][1]<113):
-			print("up left")
 
-		if (pts[i][0]>450 and pts[i][1]<225):
+		if (ax>(w/3) and ax<(2*w/3) and ay<(h/3)):
+			print("up")
+
+		if (ax>(2*w/3) and ay<(h/3)):
 			print("up right")
-		if (pts[i][0]>300 and pts[i][1]<113):
-			print("up right")
 
-		if (pts[i][0]<150 and pts[i][1]>225):
-			print("down left")
-		if (pts[i][0]<300 and pts[i][1]>338):
-			print("down left")
+		if (ax<(w/3) and ay>(h/3) and ay<(2*h/3)):
+			print("left")
 
-
-		if (pts[i][0]>450 and pts[i][1]>225):
-			print("down right")
-		if (pts[i][0]>300 and pts[i][1]>338):
-			print("down right")		
-
-		if (pts[i][0]>150 or pts[i][0]<450 or pts[i][1]==113 or pts[i][1]==338):
+		if (ax>(w/3) and ax<(2*w/3) and ay>(h/3) and ay<(2*h/3)):
 			print("center")
+
+		if (ax>(2*w/3) and ay>(h/3) and ay<(2*h/3)):
+			print("right")
+
+		if (ax<(w/3) and ay>(2*h/3)):
+			print("down left")
+
+		if (ax>(w/3) and ax<(2*w/3) and ay>(2*h/3)):
+			print("down")
+
+		if (ax>(2*w/3) and ay>(2*h/3)):
+			print("down right")
+
+		
 
 
 	# show the frame to our screen
 	cv2.imshow("Frame", frame)
 	key = cv2.waitKey(1) & 0xFF
 	#print(pts)
+	
 	# if the 'q' key is pressed, stop the loop
 	if key == ord("q"):
 		break
