@@ -19,6 +19,15 @@ bpts = deque(maxlen=64)
 vs1 = VideoStream(src=0).start()
 vs2 = VideoStream(src=1).start()
 
+def shape_detect(c):
+		# initialize the shape name and approximate the contour
+	shape = "unidentified"
+	peri = cv2.arcLength(c, True)
+	approx = cv2.approxPolyDP(c, 0.04 * peri, True)
+	if len(approx)>=5:
+		shape = "circle"
+	return shape
+
 
 time.sleep(2.0)
 
@@ -104,7 +113,7 @@ while True:
 
 		# otherwise, compute the thickness of the line and
 		# draw the connecting lines
-		thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
+		thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
 		cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
 		
 		(h, w) = frame.shape[:2] #h=y-axis, w=x-axis
@@ -139,8 +148,8 @@ while True:
 
 		if (pts[i][0]>(2*w/3) and pts[i][1]>(2*h/3)):
 			print("down right")
-
-	while(len(pts)==0)
+	print(pts)
+	while(len(pts)==0):
 		frame1 = vs2.read()
 		if frame1 is None:
 			break
@@ -178,26 +187,29 @@ while True:
 		cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
 			cv2.CHAIN_APPROX_SIMPLE)
 		cnts = imutils.grab_contours(cnts)
-		
+
 		# loop over the contours
 		for c in cnts:
 			# compute the center of the contour, then detect the name of the
 			# shape using only the contour
-			M = cv2.moments(c)
-			cX = int((M["m10"] / M["m00"]) * ratio)
-			cY = int((M["m01"] / M["m00"]) * ratio)
-			shape = sd.detect(c)
-			# multiply the contour (x, y)-coordinates by the resize ratio,
-			# then draw the contours and the name of the shape on the image
-			c = c.astype("float")
-			c *= ratio
-			c = c.astype("int")
-			cv2.drawContours(frame, [c], -1, (0, 255, 0), 2)
-			cv2.putText(frame, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,
-				0.5, (255, 255, 255), 2)
-			
+			try:
+				M = cv2.moments(c)
+				cX = int((M["m10"] / M["m00"]) * ratio)
+				cY = int((M["m01"] / M["m00"]) * ratio)
+				shape = shape_detect(c)
+				# multiply the contour (x, y)-coordinates by the resize ratio,
+				# then draw the contours and the name of the shape on the image
+				c = c.astype("float")
+				c *= ratio
+				c = c.astype("int")
+				cv2.drawContours(frame, [c], -1, (0, 255, 0), 2)
+				cv2.putText(frame, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,
+					0.5, (255, 255, 255), 2)
+				sd = shape_detect(c)
 
-		sd = shape_detect(c)
+				if (sd == "")
+			except ZeroDivisionError as e:
+				pass
 
 		for i in range(1, len(bpts)):
 
@@ -208,7 +220,7 @@ while True:
 
 			# otherwise, compute the thickness of the line and
 			# draw the connecting lines
-			thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
+			thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
 			cv2.line(frame1, bpts[i - 1], bpts[i], (0, 0, 255), thickness)
 			
 			(h, w) = frame1.shape[:2] #h=y-axis, w=x-axis
