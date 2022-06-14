@@ -1,5 +1,6 @@
-#CODE BY ZAHID AND IFRAH for task 1 
-###Gate detection without red flare avoidance
+# CODE BY ZAHID AND IFRAH for task 1 
+
+### Gate detection without red flare avoidance
 
 
 ## Perception Code Overview

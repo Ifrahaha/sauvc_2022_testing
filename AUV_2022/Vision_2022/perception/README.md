@@ -6,12 +6,19 @@
 ## Perception Code Overview
 
 conda create -n urobotics python=3.7
+
 conda activate urobotics
+
 pip3 install -r requirements.txt
+
 pip3 install -e perception/
 
+
 cd perception 
+
 python setup.py build_ext --inplace
+
 cythonize file_to_cythonize.pyx
+
 
 
