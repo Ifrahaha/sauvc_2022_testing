@@ -67,6 +67,39 @@ class Movement:
         print('Down')
         self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
         self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+#####################################
+    def down_forward(self, thrust):
+        print('Down')
+        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1500 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1500 + thrust)
+
+    def down_backward(self, thrust):
+        print('Down')
+        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1500 - thrust)
+
+    
+    def down_right(self, thrust):
+        print('Down')
+        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1500 + thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1500 - thrust)
+
+    def down_left(self, thrust):
+        print('Down')
+        self.pi.set_servo_pulsewidth(self.pin_f, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_b, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_l, 1500 - thrust)
+        self.pi.set_servo_pulsewidth(self.pin_r, 1500 + thrust)
+
+
+
+
 
     def tilt_forward(self, thrust):
         print('Tilt_Forward')
