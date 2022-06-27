@@ -97,4 +97,4 @@ class GateCenterAlgo(TaskPerceiver):
 
 if __name__ == '__main__':
     from perception.vis.vis import run
-    run(['/home/crossfire/Programming projects/perception/perception/Course Footage/GOPR1142.MP4'], GateCenterAlgo(), False)
+    run(['webcam'], GateCenterAlgo(), False)

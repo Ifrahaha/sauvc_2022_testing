@@ -46,7 +46,7 @@ class GateSegmentationAlgoA(TaskPerceiver):
             area_rect = cv.boundingRect(c)[-2] * cv.boundingRect(c)[-1]
             area_diff.append(abs((area_rect - area_cnt) / area_cnt))
             print("area rect : ",area_rect)
-            
+           	
         print("area diff : ",area_diff)
         print("area cnts : ",area_cnts)
 

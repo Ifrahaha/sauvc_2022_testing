@@ -8,7 +8,6 @@ import cv2 as cv
 import statistics
 
 
-
 class GateCenterAlgo(TaskPerceiver):
     center_x_locs, center_y_locs = [], []
     output_class = namedtuple("GateOutput", ["centerx", "centery"])
@@ -39,10 +38,9 @@ class GateCenterAlgo(TaskPerceiver):
                     cv.circle(debug_filter, self.gate_center, 5, (3,186,252), -1)
                 else:
                     cv.circle(debug_filter, self.gate_center, 5, (0,0,255), -1)
-        self.grid(frame,self.gate_center)
+        
         if debug:
             return (self.gate_center[0], self.gate_center[1]), list(debug_filters) + [debug_filter]
-        
         return (self.gate_center[0], self.gate_center[1])
 
     def center_without_optical_flow(self, center_x, center_y):
@@ -92,43 +90,11 @@ class GateCenterAlgo(TaskPerceiver):
             self.use_optical_flow = False
             return self.center_without_optical_flow(center_x, center_y)
         self.use_optical_flow = True
+        grid(self.frame,self.gate_center[0].self.gate_center[1])
         return (int(self.gate_center[0] + self.optical_flow_c * np.mean(mag * np.cos(ang))), \
                 (int(self.gate_center[1] + self.optical_flow_c * np.mean(mag * np.sin(ang)))))
-
-	
-
-    def grid(self,frame,gate_center):
-        (h, w) = frame.shape[:2] #h=y-axis, w=x-axis
-        if (gate_center[0]<(w/3) and gate_center[1]<(h/3)):
-            print("up left")
-
-        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]<(h/3)):
-            print("up")
-
-        if (gate_center[0]>(2*w/3) and gate_center[1]<(h/3)):
-            print("up right")
-
-        if (gate_center[0]<(w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
-            print("left")
-
-        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
-            print("center")
-
-        if (gate_center[0]>(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
-            print("right")
-
-        if (gate_center[0]<(w/3) and gate_center[1]>(2*h/3)):
-            print("down left")
-
-        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(2*h/3)):
-            print("down")
-
-        if (gate_center[0]>(2*w/3) and gate_center[1]>(2*h/3)):
-            print("down right")
-
 
 
 if __name__ == '__main__':
     from perception.vis.vis import run
-    run(['webcam'], GateCenterAlgo(), False)
-    
+    run(['/home/crossfire/Programming projects/perception/perception/Course Footage/GOPR1142.MP4'], GateCenterAlgo(), False)

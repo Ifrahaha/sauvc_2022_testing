@@ -1,17 +1,37 @@
-# CODE BY ZAHID AND IFRAH for task 1 
+# Task 1 Code by Zahid and Ifrah
 
-### Gate detection without red flare avoidance
+## Inside the perception folder, navigate into the 'tasks' -> 'gate' and run the file named 'Task 1.py'
+
+### Follow the instruction as below:
 
 
-## Perception Code Overview
+## Installation
+```
+    conda create -n AUV python=3.8
+```
 
-conda create -n urobotics python=3.7
-conda activate urobotics
-pip3 install -r requirements.txt
-pip3 install -e perception/
+activate it with
+```
+    conda activate AUV
+```
 
-cd perception 
-python setup.py build_ext --inplace
-cythonize file_to_cythonize.pyx
+and install all dependencies with
+```
+    pip3 install -r requirements.txt
+```
 
+and install it
+```
+    pip3 install -e perception/
+```
+
+```
+	cd perception
+```
+```
+    python setup.py build_ext --inplace
+```
+```
+    cythonize file_to_cythonize.pyx
+```
 
