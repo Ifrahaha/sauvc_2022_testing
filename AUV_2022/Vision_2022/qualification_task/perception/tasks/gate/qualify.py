@@ -23,7 +23,7 @@ class GateCenterAlgo(TaskPerceiver):
         self.gate = GateSegmentationAlgoA()
         self.prvs = None
 
-    # TODO: do input and return typing
+    
     def analyze(self, frame, debug, slider_vals):
         self.optical_flow_c = slider_vals['optical_flow_c']/100
         rect, debug_filters = self.gate.analyze(frame, True)
@@ -45,7 +45,7 @@ class GateCenterAlgo(TaskPerceiver):
         time.sleep(5)
         m.down_forward(150)
         time.sleep(20)
-        m.down(100)
+        m.down(100)   #for holding the depth
         time.sleep(5)
         
         counter = 0 
@@ -130,30 +130,42 @@ class GateCenterAlgo(TaskPerceiver):
         (h, w) = frame.shape[:2] #h=y-axis, w=x-axis
         if (gate_center[0]<(w/3) and gate_center[1]<(h/3)):
             print("up left")
+            m.up(100)
+            m.left(100)
 
-        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]<(h/3)):
+        if (deq[i][0]>(w/3) and deq[i][0]<(2*w/3) and deq[i][1]<(h/3)):
             print("up")
+            m.up(100)
 
-        if (gate_center[0]>(2*w/3) and gate_center[1]<(h/3)):
+        if (deq[i][0]>(2*w/3) and deq[i][1]<(h/3)):
             print("up right")
+            m.right(100)
 
-        if (gate_center[0]<(w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
+        if (deq[i][0]<(w/3) and deq[i][1]>(h/3) and deq[i][1]<(2*h/3)):
             print("left")
+            m.left(100)
 
-        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
+        if (deq[i][0]>(w/3) and deq[i][0]<(2*w/3) and deq[i][1]>(h/3) and deq[i][1]<(2*h/3)):
             print("center")
+            m.forward(100)
 
-        if (gate_center[0]>(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
+        if (deq[i][0]>(2*w/3) and deq[i][1]>(h/3) and deq[i][1]<(2*h/3)):
             print("right")
+            m.right(100)
 
-        if (gate_center[0]<(w/3) and gate_center[1]>(2*h/3)):
+        if (deq[i][0]<(w/3) and deq[i][1]>(2*h/3)):
             print("down left")
+            m.down(100)
+            m.left(100)
 
-        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(2*h/3)):
+        if (deq[i][0]>(w/3) and deq[i][0]<(2*w/3) and deq[i][1]>(2*h/3)):
             print("down")
+            m.down(100)
 
-        if (gate_center[0]>(2*w/3) and gate_center[1]>(2*h/3)):
+        if (deq[i][0]>(2*w/3) and deq[i][1]>(2*h/3)):
             print("down right")
+            m.down(100)
+            m.right(100)
 
     
         

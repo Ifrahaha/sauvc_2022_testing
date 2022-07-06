@@ -1,3 +1,6 @@
+#checking if prev contour is greater or smaller than current contour
+#updated in task_2_final
+
 import cv2
 import numpy as np
 

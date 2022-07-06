@@ -130,30 +130,48 @@ class GateCenterAlgo(TaskPerceiver):
         (h, w) = frame.shape[:2] #h=y-axis, w=x-axis
         if (gate_center[0]<(w/3) and gate_center[1]<(h/3)):
             print("up left")
+            m.up(100)
+            m.left(100)
 
         if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]<(h/3)):
             print("up")
+            m.up(100)
+            
 
         if (gate_center[0]>(2*w/3) and gate_center[1]<(h/3)):
             print("up right")
+            m.up(100)
+            m.right(100)
 
         if (gate_center[0]<(w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
             print("left")
+            
+            m.left(100)
 
         if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
             print("center")
+            m.forward(100)
+            
 
         if (gate_center[0]>(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
             print("right")
+            m.right(100)
+            
 
         if (gate_center[0]<(w/3) and gate_center[1]>(2*h/3)):
             print("down left")
+            m.down(100)
+            m.left(100)
 
         if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(2*h/3)):
             print("down")
+            m.down(100)
+            
 
         if (gate_center[0]>(2*w/3) and gate_center[1]>(2*h/3)):
             print("down right")
+            m.down(100)
+            m.right(100)
 
     def red_color_detection(self, frame):
         
