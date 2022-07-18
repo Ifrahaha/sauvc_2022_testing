@@ -1,14 +1,12 @@
 from perception.tasks.gate.GateSegmentationAlgoA import GateSegmentationAlgoA
 from perception.tasks.TaskPerceiver import TaskPerceiver
 from collections import namedtuple
-#import movement
 import numpy as np
 import math
 import cv2 as cv
 import statistics
 import time
 
-#m = Movement.movement()
 
 class GateCenterAlgo(TaskPerceiver):
     center_x_locs, center_y_locs = [], []
@@ -41,70 +39,20 @@ class GateCenterAlgo(TaskPerceiver):
                 else:
                     cv.circle(debug_filter, self.gate_center, 5, (0,0,255), -1)
 
-        #m.down(150)
-        #time.sleep(5)
-        #m.down_forward(150)
-        #time.sleep(20)
-        #m.down(100)
-        #time.sleep(5)
+        
         bc = self.red_color_detection(frame)
         counter = 0 
-        try: 
+
+        try:
             while (bc>10 and counter != 1) :
-		        
-		        #m.down_left(150)
-		        #time.sleep(5)
                 counter = counter + 1
         except Exception as e:
-            print(e)
-            pass
+            print("cant threshhold the contours")
 
 
         self.search(150 , 5)
 
-        #(h, w) = frame.shape[:2]
-
-        while (self.gate_center):
-                #def grid(self,h,w,gate_center):
-            (h, w) = frame.shape[:2] #h=y-axis, w=x-axis
-            if (self.gate_center[0]<(w/3) and self.gate_center[1]<(h/3)):
-                print("up left")
-                
-            if (self.gate_center[0]>(w/3) and self.gate_center[0]<(2*w/3) and self.gate_center[1]<(h/3)):
-                print("up")
-                
-            if (self.gate_center[0]>(2*w/3) and self.gate_center[1]<(h/3)):
-                print("up right")
-                
-            if (self.gate_center[0]<(w/3) and self.gate_center[1]>(h/3) and self.gate_center[1]<(2*h/3)):
-                print("left")
-                
-            if (self.gate_center[0]>(w/3) and self.gate_center[0]<(2*w/3) and self.gate_center[1]>(h/3) and self.gate_center[1]<(2*h/3)):
-                print("center")
-
-            if (self.gate_center[0]>(2*w/3) and self.gate_center[1]>(h/3) and self.gate_center[1]<(2*h/3)):
-                print("right")
-
-            if (self.gate_center[0]<(w/3) and self.gate_center[1]>(2*h/3)):
-                print("down left")
-
-            if (self.gate_center[0]>(w/3) and self.gate_center[0]<(2*w/3) and self.gate_center[1]>(2*h/3)):
-                print("down")
-
-            if (self.gate_center[0]>(2*w/3) and self.gate_center[1]>(2*h/3)):
-                print("down right")
-        
-        
-
-        
-
-
-
-
-
-
-
-
+        self.grid(frame,self.gate_center)
 
         self.search(150 , 5)
 
@@ -114,8 +62,6 @@ class GateCenterAlgo(TaskPerceiver):
         return (self.gate_center[0], self.gate_center[1])
 
     def search(self,th , ti):
-        #m.down_forward(th)
-        #time.sleep(ti)
         pass
 
 
@@ -171,6 +117,47 @@ class GateCenterAlgo(TaskPerceiver):
 
 	
 
+    def grid(self,frame,gate_center):
+        (h, w) = frame.shape[:2] #h=y-axis, w=x-axis
+        if (gate_center[0]<(w/3) and gate_center[1]<(h/3)):
+            print("up left")
+            
+
+        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]<(h/3)):
+            print("up")
+            
+            
+
+        if (gate_center[0]>(2*w/3) and gate_center[1]<(h/3)):
+            print("up right")
+            
+
+        if (gate_center[0]<(w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
+            print("left")
+            
+            
+
+        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
+            print("center")
+            
+            
+
+        if (gate_center[0]>(2*w/3) and gate_center[1]>(h/3) and gate_center[1]<(2*h/3)):
+            print("right")
+           
+            
+
+        if (gate_center[0]<(w/3) and gate_center[1]>(2*h/3)):
+            print("down left")
+            
+        if (gate_center[0]>(w/3) and gate_center[0]<(2*w/3) and gate_center[1]>(2*h/3)):
+            print("down")
+            
+            
+
+        if (gate_center[0]>(2*w/3) and gate_center[1]>(2*h/3)):
+            print("down right")
+            
 
     def red_color_detection(self, frame):
         

@@ -69,4 +69,4 @@ class GateSegmentationAlgoA(TaskPerceiver):
 
 if __name__ == '__main__':
     from perception.vis.vis import run
-    run(['/home/crossfire/Programming projects/perception/perception/Course Footage/GOPR1142.MP4'], GateSegmentationAlgoA(), False)
+    run(['webcam'], GateSegmentationAlgoA(), False)

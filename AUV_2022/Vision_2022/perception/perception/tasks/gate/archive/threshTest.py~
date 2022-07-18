@@ -176,7 +176,7 @@ while True:
         frame_threshold = cv.bitwise_not(frame_threshold)
         res = cv.bitwise_and(frame,frame, mask= frame_threshold)
         contours, hierarchy = cv.findContours(frame_threshold, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
-        contours = list(contours)
+		contours = list(contours)
         contours.sort(key=heuristic, reverse=True) #sorts the list of contours by a heuristic function, based on area, distance from previous contours
         if len(contours) > 1:#two largest heuristics are assumed to be the two gate posts
             heur0 = heuristic(contours[0])

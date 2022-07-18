@@ -50,17 +50,18 @@ class GateCenterAlgo(TaskPerceiver):
         bc = self.red_color_detection(frame)
         counter = 0 
 
-        while (bc>10 and counter != 1) :
-            
-            m.down_left(150)
-            time.sleep(5)
-            counter = counter + 1
+        try:
+            while (bc>10 and counter != 1) :
+                m.down_left(150)
+                time.sleep(5)
+                counter = counter + 1
+        except Exception as e:
+            print("cant threshhold the contours")
 
 
         self.search(150 , 5)
 
-        while (self.gate_center):
-            self.grid(frame,self.gate_center)
+        self.grid(frame,self.gate_center)
 
         self.search(150 , 5)
 
@@ -69,7 +70,7 @@ class GateCenterAlgo(TaskPerceiver):
         
         return (self.gate_center[0], self.gate_center[1])
 
-    def search(th , ti):
+    def search(self,th , ti):
         m.down_forward(th)
         time.sleep(ti)
 
@@ -178,14 +179,14 @@ class GateCenterAlgo(TaskPerceiver):
         lower = np.array([154, 112, 47], dtype = "uint8")
         higher = np.array([212, 223, 146], dtype = "uint8")
 
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
         h, w = frame.shape[:2]
-        flt = cv2.inRange(hsv, lower, higher);
+        flt = cv.inRange(hsv, lower, higher);
 
-        contours0, hierarchy = cv2.findContours(flt, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours0, hierarchy = cv.findContours(flt, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
         # Only draw the biggest one
-        bc = biggestContourI(contours0)
+        bc = self.biggestContourI(contours0)
         return bc
         
     def biggestContourI(contours):

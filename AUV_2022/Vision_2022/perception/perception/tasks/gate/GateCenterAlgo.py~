@@ -90,10 +90,11 @@ class GateCenterAlgo(TaskPerceiver):
             self.use_optical_flow = False
             return self.center_without_optical_flow(center_x, center_y)
         self.use_optical_flow = True
+        grid(self.frame,self.gate_center[0].self.gate_center[1])
         return (int(self.gate_center[0] + self.optical_flow_c * np.mean(mag * np.cos(ang))), \
                 (int(self.gate_center[1] + self.optical_flow_c * np.mean(mag * np.sin(ang)))))
 
 
 if __name__ == '__main__':
     from perception.vis.vis import run
-    run(['/home/crossfire/Programming projects/perception/perception/Course Footage/GOPR1142.MP4'], GateCenterAlgo(), False)
+    run(['webcam'], GateCenterAlgo(), False)
