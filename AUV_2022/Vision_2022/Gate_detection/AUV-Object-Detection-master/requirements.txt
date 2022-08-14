@@ -1,7 +1,0 @@
-tensorflow-object-detection-api
-tensorflow
-numpy
-matplotlib
-six
-urllib3
-opencv-python
