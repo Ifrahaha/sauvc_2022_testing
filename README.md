@@ -1,4 +1,4 @@
-# SAUVC 2022 Repository by Zahid and Ifrah test
+# SAUVC 2022 Repository by Zahid and Ifrah
 
 ## For Task 1
 
