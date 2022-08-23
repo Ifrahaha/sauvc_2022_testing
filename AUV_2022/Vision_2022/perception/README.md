@@ -10,17 +10,17 @@
 conda create -n AUV python=3.8
 ```
 
-activate it with
+* 1) activate it with
 ```
 conda activate AUV
 ```
 
-and install all dependencies with
+* 2) and install all dependencies with
 ```
 pip3 install -r requirements.txt
 ```
 
-and install it
+* 3) and install it
 ```
 pip3 install -e perception/
 ```
