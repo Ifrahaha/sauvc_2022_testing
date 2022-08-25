@@ -17,3 +17,7 @@ git clone https://github.com/WongKinYiu/yolov7.git
 cd yolov7
 python3 -m pip install -r ./requirements.txt
 ```
+#### Run the inference 
+```
+python3 ./detect.py --source 0 --device 0 --weights model.pt
+```
