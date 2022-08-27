@@ -21,3 +21,7 @@ python3 -m pip install -r ./requirements.txt
 ```
 python3 ./detect.py --source 0 --device 0 --weights model.pt
 ```
+
+```
+watch -n 1 -d sensors
+```
