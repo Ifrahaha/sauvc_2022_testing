@@ -6,7 +6,7 @@ import argparse
 import cv2
 import imutils
 import time
-import movement
+import mov
 import argparse
 import time
 from pathlib import Path
@@ -24,48 +24,50 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 
 
-m=Movement.movement()
+m=mov.Movement()
 
 
 pts = deque(maxlen=64)
 
-def grid(frame,deq):
-    (h, w) = frame.shape[:2] #h=y-axis, w=x-axis
-    if (deq[i][0]<(w/3) and deq[i][1]<(h/3)):
+def grid(deq):
+    #(h, w) = frame.shape[:2] #h=y-axis, w=x-axis
+    w = 640
+    h = 480
+    if (deq[-1][0]<(w/3) and deq[-1][1]<(h/3)):
         print("up left")
         m.up(100)
         m.left(100)
 
-    if (deq[i][0]>(w/3) and deq[i][0]<(2*w/3) and deq[i][1]<(h/3)):
+    if (deq[-1][0]>(w/3) and deq[-1][0]<(2*w/3) and deq[-1][1]<(h/3)):
         print("up")
         m.up(100)
 
-    if (deq[i][0]>(2*w/3) and deq[i][1]<(h/3)):
+    if (deq[-1][0]>(2*w/3) and deq[-1][1]<(h/3)):
         print("up right")
         m.right(100)
 
-    if (deq[i][0]<(w/3) and deq[i][1]>(h/3) and deq[i][1]<(2*h/3)):
+    if (deq[-1][0]<(w/3) and deq[-1][1]>(h/3) and deq[-1][1]<(2*h/3)):
         print("left")
         m.left(100)
 
-    if (deq[i][0]>(w/3) and deq[i][0]<(2*w/3) and deq[i][1]>(h/3) and deq[i][1]<(2*h/3)):
+    if (deq[-1][0]>(w/3) and deq[-1][0]<(2*w/3) and deq[-1][1]>(h/3) and deq[-1][1]<(2*h/3)):
         print("center")
         m.forward(100)
 
-    if (deq[i][0]>(2*w/3) and deq[i][1]>(h/3) and deq[i][1]<(2*h/3)):
+    if (deq[-1][0]>(2*w/3) and deq[-1][1]>(h/3) and deq[-1][1]<(2*h/3)):
         print("right")
         m.right(100)
 
-    if (deq[i][0]<(w/3) and deq[i][1]>(2*h/3)):
+    if (deq[-1][0]<(w/3) and deq[-1][1]>(2*h/3)):
         print("down left")
         m.down(100)
         m.left(100)
 
-    if (deq[i][0]>(w/3) and deq[i][0]<(2*w/3) and deq[i][1]>(2*h/3)):
+    if (deq[-1][0]>(w/3) and deq[-1][0]<(2*w/3) and deq[-1][1]>(2*h/3)):
         print("down")
         m.down(100)
 
-    if (deq[i][0]>(2*w/3) and deq[i][1]>(2*h/3)):
+    if (deq[-1][0]>(2*w/3) and deq[-1][1]>(2*h/3)):
         print("down right")
         m.down(100)
         m.right(100)
@@ -73,7 +75,7 @@ def grid(frame,deq):
 
 def detect(save_img=False):
     source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
-    save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
+    #save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
         ('rtsp://', 'rtmp://', 'http://', 'https://'))
 
@@ -202,9 +204,7 @@ def detect(save_img=False):
                 for i in range(1, len(pts)):
                     if pts[i - 1] is None or pts[i] is None:
                         continue
-                    thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
-                    cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
-                    grid(frame,pts)
+                    grid(pts)
 
                 # Stream results
                 if view_img:
@@ -223,7 +223,7 @@ def detect(save_img=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='yolov7.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='model.pt', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default=0, help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
@@ -240,12 +240,12 @@ if __name__ == '__main__':
     parser.add_argument('--project', default='runs/detect', help='save results to project/name')
     parser.add_argument('--name', default='exp', help='save results to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
-    parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
+    parser.add_argument('--no-trace', action='store_true', default=True, help='don`t trace model')
     opt = parser.parse_args()
     print(opt)
     
     with torch.no_grad():
-        if opt.update:  # update all models (to fix SourceChangeWarning)
+        if opt.update:  # update all models (tofix SourceChangeWarning)
             for opt.weights in ['yolov7.pt']:
                 detect()
                 strip_optimizer(opt.weights)
