@@ -3,6 +3,6 @@ import time
 import serial
 from arm_file import arm
 
-arm = arm_file.arm()
+arm = arm.arm_file()
 
 arm()
