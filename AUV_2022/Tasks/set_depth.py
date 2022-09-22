@@ -34,8 +34,6 @@ def set_target_depth(depth):
         ), lat_int=0, lon_int=0, alt=depth, # (x, y WGS84 frame pos - not used), z [m]
         vx=0, vy=0, vz=0, # velocities in NED frame [m/s] (not used)
         afx=0, afy=0, afz=0, yaw=0, yaw_rate=0
-        # accelerations in NED frame [N], yaw, yaw_rate
-        #  (all not supported yet, ignored in GCS Mavlink)
     )
 
 def set_target_attitude(roll, pitch, yaw):
@@ -73,19 +71,5 @@ while (2<3):
 # set a depth target
 	
 	set_target_depth(-0.5)
-
-# go for a spin
-# (set target yaw from 0 to 500 degrees in steps of 10, one update per second)
-#roll_angle = pitch_angle = 0
-#for yaw_angle in range(0, 500, 10):
- #   set_target_attitude(roll_angle, pitch_angle, yaw_angle)
-  #  time.sleep(1) # wait for a second
-
-# spin the other way with 3x larger steps
-#for yaw_angle in range(500, 0, -30):
- #   set_target_attitude(roll_angle, pitch_angle, yaw_angle)
-  #  time.sleep(1)
-
-# clean up (disarm) at the end
 master.arducopter_disarm()
 master.motors_disarmed_wait()
