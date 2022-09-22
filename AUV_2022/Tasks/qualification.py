@@ -3,6 +3,8 @@ import time
 import serial
 import arm_file
 import time
+
+from threading import Thread
 import math
 
 from pymavlink import mavutil
@@ -86,8 +88,12 @@ DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
     master.set_mode(DEPTH_HOLD)
 while (2<3):
-	set_target_depth(-0.5)
+	Thread(target = set_target_depth(-0.5)).start()
+    
 
 while True:
-    set_rc_channel_pwm(4, 1550)   
+    Thread(target = set_rc_channel_pwm(4, 1550)).start()   
 
+
+
+    
