@@ -8,10 +8,18 @@ import math
 from pymavlink import mavutil
 
 from pymavlink.quaternion import QuaternionBase
-a = arm_file.arm()
 
-a.arm()
-
+def arm():
+    master.mav.command_long_send(
+    master.target_system,
+    master.target_component,
+    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+    0,
+    1, 0, 0, 0, 0, 0, 0)
+    # # wait until arming confirmed (can manually check with master.motors_armed())
+    print("Waiting for the vehicle to arm")
+    master.motors_armed_wait()
+    print('Armed!')
 
 def set_target_depth(depth):
     master.mav.set_position_target_global_int_send(
@@ -72,6 +80,7 @@ boot_time = time.time()
 master.wait_heartbeat()
 master.arducopter_arm()
 master.motors_armed_wait()
+arm()
 DEPTH_HOLD = 'ALT_HOLD'
 DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
