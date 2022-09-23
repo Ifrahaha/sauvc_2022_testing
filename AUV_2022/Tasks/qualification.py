@@ -87,15 +87,16 @@ DEPTH_HOLD = 'ALT_HOLD'
 DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
     master.set_mode(DEPTH_HOLD)
-    
+
 set_target_depth(-0.5)
 time.sleep(5)
-while (2<3):
-	Thread(target = set_target_depth(-0.5)).start()
-    
 
-while True:
-    Thread(target = set_rc_channel_pwm(4, 1550)).start()   
+while (2<3):
+    print("depth")
+    Thread(target = set_target_depth(-0.5)).start()
+    print("move")
+    Thread(target = set_rc_channel_pwm(4, 1550)).start()  
+
 
 
 
