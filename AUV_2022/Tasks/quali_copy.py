@@ -3,11 +3,12 @@ import time
 import serial
 import arm_file
 import time
-import signal
-import time
+
 from threading import Thread
 import math
+
 from pymavlink import mavutil
+
 from pymavlink.quaternion import QuaternionBase
 
 def arm():
@@ -54,8 +55,6 @@ def set_target_attitude(roll, pitch, yaw):
         0, 0, 0, 0 
     )
 
-def handle_timeout(signum, frame):
-    raise TimeoutError
 
 def set_rc_channel_pwm(channel_id, pwm=1500):
     """ Set RC channel pwm value
@@ -83,31 +82,17 @@ boot_time = time.time()
 master.wait_heartbeat()
 master.arducopter_arm()
 master.motors_armed_wait()
-
-
-signal.signal(signal.SIGALRM, handle_timeout)
-signal.alarm(7)  # 5 seconds
-
-try:
-    arm()
-except TimeoutError:
-    print("It took too long to finish the job")
-    arm()
+arm()
 DEPTH_HOLD = 'ALT_HOLD'
 DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
     master.set_mode(DEPTH_HOLD)
-
-set_target_depth(-0.5)
-time.sleep(5)
-
 while (2<3):
-    print("depth")
-    Thread(target = set_target_depth(-0.5)).start()
-    print("move")
-    Thread(target = set_rc_channel_pwm(4, 1550)).start()  
+	Thread(target = set_target_depth(-0.5)).start()
+    
 
-
+while True:
+    Thread(target = set_rc_channel_pwm(4, 1550)).start()   
 
 
 
