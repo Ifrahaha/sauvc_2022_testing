@@ -9,6 +9,8 @@ from threading import Thread
 import math
 from pymavlink import mavutil
 from pymavlink.quaternion import QuaternionBase
+import signal
+from contextlib import contextmanager
 
 def arm():
     master.mav.command_long_send(
@@ -84,15 +86,28 @@ master.wait_heartbeat()
 master.arducopter_arm()
 master.motors_armed_wait()
 
+class TimeoutException(Exception): pass
 
-signal.signal(signal.SIGALRM, handle_timeout)
-signal.alarm(7)  # 5 seconds
+@contextmanager
+def time_limit(seconds):
+    def signal_handler(signum, frame):
+        raise TimeoutException("Timed out!")
+    signal.signal(signal.SIGALRM, signal_handler)
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+
 
 try:
-    arm()
-except TimeoutError:
-    print("It took too long to finish the job")
-    arm()
+    with time_limit(10):
+        arm()
+except TimeoutException as e:
+    print("Timed out!")
+
+
+    
 DEPTH_HOLD = 'ALT_HOLD'
 DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
