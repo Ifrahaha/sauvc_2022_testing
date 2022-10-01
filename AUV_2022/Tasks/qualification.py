@@ -1,7 +1,6 @@
 from pymavlink import mavutil
 import time
 import serial
-import arm_file
 import time
 import signal
 import time
@@ -11,8 +10,6 @@ from pymavlink import mavutil
 from pymavlink.quaternion import QuaternionBase
 import signal
 from contextlib import contextmanager
-from arm import arm
-from test
 
 def arm():
     master.mav.command_long_send(
