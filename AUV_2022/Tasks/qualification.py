@@ -18,12 +18,12 @@ def arm():
     mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
     0,
     1, 0, 0, 0, 0, 0, 0)
-    # # wait until arming confirmed (can manually check with master.motors_armed())
     print("Waiting for the vehicle to arm")
     master.motors_armed_wait()
     print('Armed!')
 
 def set_target_depth(depth):
+    print("Depth")
     master.mav.set_position_target_global_int_send(
         int(1e3 * (time.time() - boot_time)), # ms since boot
         master.target_system, master.target_component,
@@ -64,7 +64,7 @@ def set_rc_channel_pwm(channel_id, pwm=1500):
         channel_id (TYPE): Channel ID
         pwm (int, optional): Channel pwm value 1900-1900
     """
-
+    print("Move")
     if channel_id < 1 or channel_id > 18:
         print("Channel does not exist.")
         return
@@ -75,7 +75,6 @@ def set_rc_channel_pwm(channel_id, pwm=1500):
         master.target_component,             # target_component
         *rc_channel_values)                  # RC channel list, in microseconds.
 
-
 master = mavutil.mavlink_connection("/dev/ttyACM0", baud=57600)
 boot_time = time.time()
 master.wait_heartbeat()
@@ -83,7 +82,6 @@ master.arducopter_arm()
 master.motors_armed_wait()
 
 class TimeoutException(Exception): pass
-
 @contextmanager
 def time_limit(seconds):
     def signal_handler(signum, frame):
@@ -94,14 +92,11 @@ def time_limit(seconds):
         yield
     finally:
         signal.alarm(0)
-
-
 try:
     with time_limit(10):
         arm()
 except TimeoutException as e:
     print("Timed out!")
-
 
 DEPTH_HOLD = 'ALT_HOLD'
 DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
@@ -112,7 +107,5 @@ set_target_depth(-0.5)
 time.sleep(5)
 
 while (2<3):
-    print("depth")
     Thread(target = set_target_depth(-0.5)).start()
-    print("move")
     Thread(target = set_rc_channel_pwm(4, 1550)).start()  
