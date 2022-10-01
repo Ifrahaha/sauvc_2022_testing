@@ -11,6 +11,8 @@ from pymavlink import mavutil
 from pymavlink.quaternion import QuaternionBase
 import signal
 from contextlib import contextmanager
+from arm import arm
+from test
 
 def arm():
     master.mav.command_long_send(
@@ -69,9 +71,6 @@ def set_rc_channel_pwm(channel_id, pwm=1500):
     if channel_id < 1 or channel_id > 18:
         print("Channel does not exist.")
         return
-
-    # Mavlink 2 supports up to 18 channels:
-    # https://mavlink.io/en/messages/common.html#RC_CHANNELS_OVERRIDE
     rc_channel_values = [65535 for _ in range(8)]
     rc_channel_values[channel_id - 1] = pwm
     master.mav.rc_channels_override_send(
@@ -107,7 +106,6 @@ except TimeoutException as e:
     print("Timed out!")
 
 
-    
 DEPTH_HOLD = 'ALT_HOLD'
 DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
@@ -121,9 +119,3 @@ while (2<3):
     Thread(target = set_target_depth(-0.5)).start()
     print("move")
     Thread(target = set_rc_channel_pwm(4, 1550)).start()  
-
-
-
-
-
-    
