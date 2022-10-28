@@ -16,7 +16,6 @@ def arm():
     Exceptions: 
         Might lag during arming, simply rerun the command.
     """
-
     master.mav.command_long_send(
     master.target_system,
     master.target_component,
