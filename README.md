@@ -31,13 +31,10 @@
 
 
 ## Installing Anaconda in Raspberry Pi
-* Open terminal and type:
+* Download Mambaforge from Conda-forge:
 ```wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-aarch64.sh```
-
+* install Mambaforge:
 ```bash Mambaforge-Linux-aarch64.sh```
-
-```bash Mambaforge-Linux-aarch64.sh```
-
+* Update Mambaforge:
 ```mamba update mamba```
-
 ```mamba update --all```
