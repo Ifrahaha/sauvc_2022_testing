@@ -28,3 +28,16 @@
 
 * Install OpenCV
 ``` pip install opencv-contrib-python ```
+
+
+## Installing Anaconda in Raspberry Pi
+* Open terminal and type:
+```wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-aarch64.sh```
+
+```bash Mambaforge-Linux-aarch64.sh```
+
+```bash Mambaforge-Linux-aarch64.sh```
+
+```mamba update mamba```
+
+```mamba update --all```
